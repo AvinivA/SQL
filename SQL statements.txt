@@ -1,0 +1,23 @@
+In SQL table is similar to a sheet in excel.
+
+Note- SQL statements need not be uppercase, but it is convention followed for better readability.
+
+SQL statements-
+
+1) SELECT- Is used to select a column or group of column from the specified table.
+
+	Syntax-> SELECT <COLUMNS> FROM table
+	Example-> SELECT first_name,last_name FROM customer;
+		  SELECT * FROM customer
+
+2) SELECT DISTINCT-> Similar to the SELECT statement, but it only disaplys the distinct elements in the column.
+	
+	Example-> SELECT DISTINCT rating FROM film;
+
+3) SELECT COUNT -> Count the number of rows in the column.
+
+	Syntax-> SELECT COUNT (<column>) FROM table ->-> Here () is necessary as the data in the paranthesis is treated as input to COUNT
+	Example-> SELECT COUNT (amount) FROM payment;
+	
+	To count number of distinct elements in the column
+	Example-> SELECT COUNT (DISTINCT(amount)) FROM payment;

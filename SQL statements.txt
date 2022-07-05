@@ -21,3 +21,48 @@ SQL statements-
 	
 	To count number of distinct elements in the column
 	Example-> SELECT COUNT (DISTINCT(amount)) FROM payment;
+
+4) SELECT WHERE -> After selecting the columns, apply the condition to fetch particular entries from the columns.
+
+	Syntax-> SELECT <cloumn name/s> FROM table WHERE <some condition>;
+	1. Example -> SELECT name,choice FROM customer WHERE name='Avinash' AND choice='A'
+	2. Example -> SELCT * FROM film WHERE rental_rate > 4 AND replacement_cost > 5 AND rating = 'U'
+	3. Example-> to count occurence -> SELCT COUNT(*) FROM film WHERE rental_rate > 4 AND replacement_cost > 5 AND rating = 'U'
+
+Note-> 1) In SQL strings are enclosed in single quotes ''
+       2) Different operators are-
+		a) =  equal (not == it is just =)
+		b) >, <, >=, <= and != (or even <>) are self explanatory.
+       3) AND, OR and NOT are logical operators.
+       4) WHERE can be applied on the column that is not part of the SELECT's column list.
+	   Example- SELECT first_name FROM customer
+		    WHERE customer_id>5
+
+5) ORDER BY -> Is used to group- in either ascending or descending order- the selected columns. The columns of string type are grouped alphabetically. 
+	
+	Syntax-> SELECT <column/s> FROM table 
+		 ORDER BY <column_name> <ASC/DSC>, <column_name2> <ASC/DSC>;
+		
+Note->  1) By default, the order is ascending.
+	2) When multiple columns are specified after ORDER, the ordering is applied starting from left to right i.e the ordering of the right columns are applied on the result of columns starting from left.
+	3) The ORDER BY can be applied on the column that is not present in the SELCET's columns name.
+		Example-> SELECT first_name FROM customer
+		          ORDER BY customer_id DSC
+
+	1. Example-> SELECT first_name,last_name,store_id FROM customer ORDER BY stored_id ASC, first_name ASC;
+	   Here stored id will repeat from different customer like 1,1,2,2,2,3,4,2 and so on. This query first orders stored id and then applies first_name ordering on the ordered store_id.
+
+6) LIMIT -> Is used to limit the number of rows in the selected columns.
+
+	Syntax-> SELCT <column/s> FROM table LIMIT <req. number of columns>
+	Example-> SELECT first_name FROM customer
+		  WHERE transaction_cost>5
+		  ORDER BY transaction_cost DSC
+                  LIMIT 5;
+
+Note-> ORDER BY can't be put before WERE statements.
+	SELECT * FROM customer			SELECT * FROM customer_id
+	ORDER BY customer_id			WHERE customer_id > 5
+	WHERE customer_id>5;			ORDER BY customer_id ASC;
+
+	This is wrong				This is correct.

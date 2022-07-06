@@ -49,7 +49,8 @@ Note->  1) By default, the order is ascending.
 		Example-> SELECT first_name FROM customer
 		          ORDER BY customer_id DSC
 
-	1. Example-> SELECT first_name,last_name,store_id FROM customer ORDER BY stored_id ASC, first_name ASC;
+	1. Example-> SELECT first_name,last_name,store_id FROM customer
+		     ORDER BY stored_id ASC, first_name ASC;
 	   Here stored id will repeat from different customer like 1,1,2,2,2,3,4,2 and so on. This query first orders stored id and then applies first_name ordering on the ordered store_id.
 
 6) LIMIT -> Is used to limit the number of rows in the selected columns.
@@ -66,3 +67,44 @@ Note-> ORDER BY can't be put before WERE statements.
 	WHERE customer_id>5;			ORDER BY customer_id ASC;
 
 	This is wrong				This is correct.
+
+7) BETWEEN -> Is used to select values between provided limit (limits inclusive)
+
+	Syntax-> SELECT <column/s> FROM table
+		 WHERE <column> BETWEEN <lower limit> AND <upper limit>
+
+		This is lower_limit <= <column> <= upper_limit
+	
+		WHERE <column> NOT BETWEEN <lower limit> AND <upper limit> is opposite of above.
+
+	Exmaple-> SELECT * from film
+		  WHERE rating BETWEEN 4 AND 5;
+
+Note-> * While BETWEEN is applied to timestamp, only the 0th hour of upper limit is conisdered.
+	Eg-> Assume there is a transaction on 2022-07-06 13:00
+	     If the query used is BETWEEN 2022-07-04 AND 2022-07-06 then above transaction won't be counted as it on some time above 0:00. So, be bit careful.
+
+8) IN -> Can be used to select group of values in the column instead of using chaing of OR values.
+
+	Syntax-> SELECT <column/s> FROM table
+		 WHERE <column> IN (req value 1, req value2.. and so on)
+
+	Example-> SELECT * FROM film
+	          WHERE series IN ('Flash','Sherlock Holmes','Prison Break')
+
+9) LIKE and ILIKE -> These are used for pattern matching. LIKE is case-sensitive and ILIKE is case-insensitive.
+
+		% -> meaning can be filled by group of characters or even no character.
+	          
+		Example -> %NASH% -> means all those names having NASH in them. eg-> AVINASH, NASH, NASHAA, AANASH
+ 
+ 		_ -> menaing only one character.
+
+		Example -> _ASH -> means only one character allowed before ASH. eg-> NASH, AASH
+
+	Syntax-> SELECT <column/s> FROM table
+		 WHERE <column> LIKE/ILIKE '%ASH_'
+
+	Example-> SELECT * FROM film
+		  WHERE first_name ILIKE 'J%' AND last_name LIKE '%JOS_'
+ 

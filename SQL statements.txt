@@ -41,13 +41,13 @@ Note-> 1) In SQL strings are enclosed in single quotes ''
 5) ORDER BY -> Is used to group- in either ascending or descending order- the selected columns. The columns of string type are grouped alphabetically. 
 	
 	Syntax-> SELECT <column/s> FROM table 
-		 ORDER BY <column_name> <ASC/DSC>, <column_name2> <ASC/DSC>;
+		 ORDER BY <column_name> <ASC/DESC>, <column_name2> <ASC/DESC>;
 		
 Note->  1) By default, the order is ascending.
 	2) When multiple columns are specified after ORDER, the ordering is applied starting from left to right i.e the ordering of the right columns are applied on the result of columns starting from left.
 	3) The ORDER BY can be applied on the column that is not present in the SELCET's columns name.
 		Example-> SELECT first_name FROM customer
-		          ORDER BY customer_id DSC
+		          ORDER BY customer_id DESC
 
 	1. Example-> SELECT first_name,last_name,store_id FROM customer
 		     ORDER BY stored_id ASC, first_name ASC;
@@ -107,4 +107,62 @@ Note-> * While BETWEEN is applied to timestamp, only the 0th hour of upper limit
 
 	Example-> SELECT * FROM film
 		  WHERE first_name ILIKE 'J%' AND last_name LIKE '%JOS_'
- 
+
+
+10) Commonly used aggregate functions-
+
+	1) AVG() 2) COUNT() 3) MAX() 4) MIN() 5)SUM()
+
+Note:   1) The above fuctions needs to be used with SELECT statement.
+ 	2) The AVG and SUM returns long decimal values. ROUND() has to be used.
+
+	Example- SELECT ROUND(AVG(cost)),MAX(ID) FROM film;
+
+11) GROUP BY- Is used to same similar categorical data. This statement has to be applied only on the categorical column/s. 
+              The categorical columns can be either numbers or even strings or alphanumeric values.
+	      They have to be used either after FROM or after WHERE. Also, some aggregate functions has to be used before FROM.
+
+		Syntax- SELECT <column a>, Aggregate_func(column b)
+			FROM <table_name>
+			GROUP BY <column a>
+
+			or 
+
+			SELECT <column a>, Aggregate_func(column b)
+			FROM <table_name>
+			WHERE <column a>
+			GROUP BY <column a>
+
+Note- The column should be same in SELECT and GROUP BY. The aggregate and SELECT shouldn't be applied on same column.
+
+		Exmaple- SELECT company,SUM(sales)
+			 FROM finance_table
+			 GROUP BY company
+
+
+			 SELECT company,division,SUM(sales)
+			 FROM finance_table
+		         WHERE division IN ('marketing','transport')
+			 GROUP BY company,division
+
+			 SELECT company,SUM(sales)
+			 FROM finance_table
+			 GROUP BY company
+			 ORDER BY SUM(sales) -> when ORDER BY is used, it is mandatory to use aggregate function when GROUP BY is used.
+
+		Exercise- There are two staffs with ID 1 and 2. What is the total number of payments handled by them. How many payments did each staff handle?
+		Solution- SELECT staff_id,COUNT(payment_id)
+			  FROM payment
+                          GROUP BY staff_id;
+
+		Exercise- Find the average replacement cost for different movie rating.
+		Solution- SELECT rating,ROUND(AVG(replacement_cost),2)
+			  from film
+			  GROUP BY rating
+
+		Exercise- Find the top5 customers by amount spent
+		Solution- SELECT customer_id,SUM(amount)
+			  FROM payment
+			  GROUP BY customer_id
+			  ORDER BY SUM(amount)DESC
+			  LIMIT 5

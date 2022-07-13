@@ -166,3 +166,28 @@ Note- The column should be same in SELECT and GROUP BY. The aggregate and SELECT
 			  GROUP BY customer_id
 			  ORDER BY SUM(amount)DESC
 			  LIMIT 5
+
+12) HAVING- Is used to filter out the results after the GROUP BY is done.
+
+	Basic idea- WHERE can be used to filter out the required columns and this statement is called before a GROUP BY. 
+		    However, WHERE can't be used after the GROUP BY is called on the aggregate functions (like COUNT , AVG etc)
+		    In this secnario, the HAVING has to be used.
+
+		    Aggregate functions are applied only after the grouping is performed. So, HAVING has to be used after GROUP BY
+
+	Example- SELECT company_name,SUM(sales)
+		 FROM company_table
+		 WHERE company_name != 'Google'
+		 GROUP BY company_name
+                 HAVING SUM(sales) > 20,000      -> WHERE can't be used after the GROUP BY on aggregate functions. Also, it's not mandatory to use WHERE filter here.
+
+	Ex 1- SELECT customer_id,COUNT(payment_id) 
+		  FROM payment
+		  GROUP BY customer_id
+		  HAVING COUNT(payment_id)>=40
+
+	Ex 2- SELECT staff_id,customer_id,SUM(amount)
+	      FROM payment
+              WHERE staff_id = 2
+	      GROUP BY staff_id,customer_id
+	      HAVING SUM(amount)>100

@@ -191,3 +191,32 @@ Note- The column should be same in SELECT and GROUP BY. The aggregate and SELECT
               WHERE staff_id = 2
 	      GROUP BY staff_id,customer_id
 	      HAVING SUM(amount)>100
+
+13) As- Is used  to alias the name of the column. However, this aliasing happens at the last stage. So, this aliased named can't be used in the query.
+	The idea behind using alias is that sometimes the columns name doesn't convey the meaning properly. In those cases, alias can be used.
+
+	* Alias should be used only after SELECT call.
+
+	Eg- SELECT customer_id,SUM(amount) AS transaction_amount
+	    FROM payment
+	    WHERE SUM(amount) > 100  -> here transaction_amount can't be used, only SUM(amount) has to be used.
+
+Joins- These are used to join two tables based on the specified conditions.
+
+
+14) INNER JOINS- Are used to select those item which are similar to both the tables in the specified column.
+		
+	Venn diagram- Intersection of two tables.
+
+	Example- SELECT payment_id,payment.customer_id,first_name
+		 FROM customer
+		 INNER JOIN payment
+ 		 ON payment.cusomter_id = payment.customer_id
+
+		The table names are customer and payment. 
+
+	This Query's output is customer_id which is common to both the table and also displaying the corresponding payment_id and first_name.
+
+	Note- * When there is a column that is common to both the tables, in order to remove the ambugity of which tables' column is slected, 
+		table_name.column_name is used.
+	      * In INNER JOINS, the table names can be interchanged as this just gives out intersections.
